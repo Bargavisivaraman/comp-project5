@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSUN Map Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div id="container">
+
+       
+        <div id="panel">
+            <h1>Map Quiz. Please double click on the map the location of:</h1>
+
+            
+            <div id="prompts"></div>
+
+            timer and high score 
+            <div id="stats">
+                <p>Time: <span id="timer">0</span>s</p>
+                <p>High Score (fastest perfect): <span id="highscore">--</span></p>
+            </div>
+
+            
+            <div id="finalScore"></div>
+        </div>
+
+       
+        <div id="map"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+   
+    <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtFGp8Hv07_Kifs5ddNqV1yrlMDxpfFM0&callback=initMap"></script>
+    </script>
+
+</body>
+</html>

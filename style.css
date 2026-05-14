@@ -1,0 +1,76 @@
+/* page background */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e6dcb8;
+    font-family: Georgia, serif;
+}
+
+/* layout: two columns */
+#container {
+    display: flex;
+    padding: 20px;
+}
+
+/* left panel for the quiz prompts */
+#panel {
+    width: 320px;
+    margin-right: 20px;
+}
+
+#panel h1 {
+    font-size: 22px;
+    color: #2a1d0d;
+    margin-bottom: 10px;
+}
+
+/* map fills the rest */
+#map {
+    flex: 1;
+    height: 600px;
+    border: 1px solid #999;
+}
+
+/* each location prompt */
+.prompt {
+    background-color: #4a90c2;
+    color: white;
+    text-align: center;
+    padding: 4px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* correct answer text */
+.correct {
+    background-color: #b8d4b8;
+    color: green;
+    text-align: center;
+    padding: 4px;
+    font-style: italic;
+}
+
+/* wrong answer text */
+.wrong {
+    background-color: #d4b8b8;
+    color: red;
+    text-align: center;
+    padding: 4px;
+    font-style: italic;
+}
+
+/* timer + high score */
+#stats {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #2a1d0d;
+}
+
+/* final score big text */
+#finalScore {
+    font-size: 42px;
+    font-weight: bold;
+    color: #2a1d0d;
+    margin-top: 20px;
+    text-align: center;
+}

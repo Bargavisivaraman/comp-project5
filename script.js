@@ -1,32 +1,30 @@
 // list of CSUN locations to quiz on
-// each one has a name and a bounding box (NE and SW corners)
+// each one has a center point and a size for the bounding box
 var locations = [
     {
         name: "the Oviatt Library",
-        ne: { lat: 34.2410, lng: -118.5285 },
-        sw: { lat: 34.2395, lng: -118.5305 }
+        center: { lat: 34.2400, lng: -118.5294 }
     },
     {
         name: "Sierra Hall",
-        ne: { lat: 34.2390, lng: -118.5290 },
-        sw: { lat: 34.2378, lng: -118.5310 }
+        center: { lat: 34.2384, lng: -118.5298 }
     },
     {
         name: "the University Student Union",
-        ne: { lat: 34.2400, lng: -118.5255 },
-        sw: { lat: 34.2388, lng: -118.5275 }
+        center: { lat: 34.2393, lng: -118.5264 }
     },
     {
         name: "the Bookstore",
-        ne: { lat: 34.2412, lng: -118.5263 },
-        sw: { lat: 34.2402, lng: -118.5278 }
+        center: { lat: 34.2406, lng: -118.5269 }
     },
     {
         name: "the Student Recreation Center",
-        ne: { lat: 34.2420, lng: -118.5253 },
-        sw: { lat: 34.2407, lng: -118.5273 }
+        center: { lat: 34.2413, lng: -118.5262 }
     }
 ];
+
+// how big the bounding box is around each location
+var boxSize = 0.0008;
 
 // quiz state
 var map;
@@ -50,6 +48,17 @@ function initMap() {
         disableDoubleClickZoom: true,
         draggable: false
     });
+
+    // build a LatLngBounds for each location
+    // this uses google.maps.LatLngBounds
+    for (var i = 0; i < locations.length; i++) {
+        var c = locations[i].center;
+        var bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(c.lat - boxSize, c.lng - boxSize),
+            new google.maps.LatLng(c.lat + boxSize, c.lng + boxSize)
+        );
+        locations[i].bounds = bounds;
+    }
 
     // listen for double clicks on the map
     map.addListener("dblclick", handleDoubleClick);
@@ -84,22 +93,17 @@ function handleDoubleClick(event) {
         return;
     }
 
-    var lat = event.latLng.lat();
-    var lng = event.latLng.lng();
     var loc = locations[currentIndex];
 
-    // check if the click is inside the location bounds
-    var inside = (lat <= loc.ne.lat && lat >= loc.sw.lat &&
-                  lng <= loc.ne.lng && lng >= loc.sw.lng);
+    // use the LatLngBounds contains method to check the click
+    var inside = loc.bounds.contains(event.latLng);
 
     if (inside) {
-        // correct answer, draw a green rectangle
         drawRectangle(loc, "#00aa00");
         $("#prompts").append('<div class="correct">Your answer is correct!!</div>');
         correctCount++;
         runAnimation(loc);
     } else {
-        // wrong answer, draw a red rectangle on the actual location
         drawRectangle(loc, "#cc0000");
         $("#prompts").append('<div class="wrong">Sorry wrong location.</div>');
     }
@@ -108,7 +112,7 @@ function handleDoubleClick(event) {
     showNextQuestion();
 }
 
-// draws a colored rectangle over a location
+// draws a colored rectangle over a location using the bounds
 function drawRectangle(loc, color) {
     new google.maps.Rectangle({
         strokeColor: color,
@@ -117,60 +121,29 @@ function drawRectangle(loc, color) {
         fillColor: color,
         fillOpacity: 0.35,
         map: map,
-        bounds: {
-            north: loc.ne.lat,
-            south: loc.sw.lat,
-            east: loc.ne.lng,
-            west: loc.sw.lng
-        }
+        bounds: loc.bounds
     });
 }
 
-// animated polyline using a moving arrow symbol
-// this uses google.maps.Polyline and google.maps.SymbolPath
+// draws an animated polyline across the correct location
+// this uses google.maps.Polyline
 function runAnimation(loc) {
 
-    // remove the previous line if there is one
     if (animatedLine) {
         animatedLine.setMap(null);
     }
 
-    var centerLat = (loc.ne.lat + loc.sw.lat) / 2;
-    var centerLng = (loc.ne.lng + loc.sw.lng) / 2;
+    var c = loc.center;
 
-    // moving arrow symbol
-    var arrow = {
-        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-        scale: 4,
-        strokeColor: "#0000ff"
-    };
-
-    // draw a short line near the correct location
     animatedLine = new google.maps.Polyline({
         path: [
-            { lat: centerLat - 0.0005, lng: centerLng - 0.0005 },
-            { lat: centerLat + 0.0005, lng: centerLng + 0.0005 }
+            { lat: c.lat - 0.0006, lng: c.lng - 0.0006 },
+            { lat: c.lat + 0.0006, lng: c.lng + 0.0006 }
         ],
-        icons: [{
-            icon: arrow,
-            offset: "0%"
-        }],
         map: map,
         strokeColor: "#0000ff",
-        strokeWeight: 3
+        strokeWeight: 4
     });
-
-    // animate the arrow along the line
-    var count = 0;
-    var animInterval = setInterval(function() {
-        count = (count + 2) % 200;
-        var icons = animatedLine.get("icons");
-        icons[0].offset = (count / 2) + "%";
-        animatedLine.set("icons", icons);
-        if (count === 0) {
-            clearInterval(animInterval);
-        }
-    }, 30);
 }
 
 // end of quiz display
@@ -179,7 +152,6 @@ function endQuiz() {
     var wrong = locations.length - correctCount;
     $("#finalScore").text(correctCount + " Correct, " + wrong + " Incorrect");
 
-    // save high score if it was a perfect run
     if (correctCount === locations.length) {
         saveHighScore(timer);
     }

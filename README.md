@@ -3,7 +3,7 @@
 A location based quiz game using the Google Maps API. The map is centered on the CSUN campus
 and the player is asked to double click on the location of different buildings.
 
-Live site: 
+Live site: https://bargavisivaraman.github.io/comp-project5/
 
 ## How to play
 

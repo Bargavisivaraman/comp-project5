@@ -15,11 +15,11 @@ var locations = [
     },
     {
         name: "the Bookstore",
-        center: { lat: 34.2406, lng: -118.5269 }
+        center: { lat: 34.2378, lng: -118.5278 }
     },
     {
         name: "the Student Recreation Center",
-        center: { lat: 34.2413, lng: -118.5262 }
+        center: { lat: 34.2397, lng: -118.5252 }
     }
 ];
 
@@ -125,7 +125,7 @@ function drawRectangle(loc, color) {
     });
 }
 
-// draws an animated polyline across the correct location
+// draws a polyline across the correct location
 // this uses google.maps.Polyline
 function runAnimation(loc) {
 

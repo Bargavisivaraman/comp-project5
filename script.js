@@ -3,28 +3,28 @@
 var locations = [
     {
         name: "the Oviatt Library",
-        ne: { lat: 34.2419, lng: -118.5283 },
-        sw: { lat: 34.2400, lng: -118.5305 }
+        ne: { lat: 34.2410, lng: -118.5285 },
+        sw: { lat: 34.2395, lng: -118.5305 }
     },
     {
         name: "Sierra Hall",
-        ne: { lat: 34.2401, lng: -118.5275 },
-        sw: { lat: 34.2389, lng: -118.5292 }
+        ne: { lat: 34.2390, lng: -118.5290 },
+        sw: { lat: 34.2378, lng: -118.5310 }
     },
     {
         name: "the University Student Union",
-        ne: { lat: 34.2393, lng: -118.5260 },
-        sw: { lat: 34.2378, lng: -118.5278 }
+        ne: { lat: 34.2400, lng: -118.5255 },
+        sw: { lat: 34.2388, lng: -118.5275 }
     },
     {
         name: "the Bookstore",
-        ne: { lat: 34.2407, lng: -118.5258 },
-        sw: { lat: 34.2395, lng: -118.5273 }
+        ne: { lat: 34.2412, lng: -118.5263 },
+        sw: { lat: 34.2402, lng: -118.5278 }
     },
     {
         name: "the Student Recreation Center",
-        ne: { lat: 34.2418, lng: -118.5253 },
-        sw: { lat: 34.2403, lng: -118.5273 }
+        ne: { lat: 34.2420, lng: -118.5253 },
+        sw: { lat: 34.2407, lng: -118.5273 }
     }
 ];
 
@@ -41,7 +41,7 @@ function initMap() {
 
     // create the map centered on CSUN with all interactions disabled
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 34.2407, lng: -118.5280 },
+        center: { lat: 34.2400, lng: -118.5280 },
         zoom: 17,
         disableDefaultUI: true,
         gestureHandling: "none",
@@ -130,7 +130,7 @@ function drawRectangle(loc, color) {
 // this uses google.maps.Polyline and google.maps.SymbolPath
 function runAnimation(loc) {
 
-    
+    // remove the previous line if there is one
     if (animatedLine) {
         animatedLine.setMap(null);
     }

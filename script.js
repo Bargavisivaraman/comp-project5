@@ -11,11 +11,11 @@ var locations = [
     },
     {
         name: "the University Student Union",
-        center: { lat: 34.2394, lng: -118.5258 }
+        center: { lat: 34.2392, lng: -118.5263 }
     },
     {
         name: "the Bookstore",
-        center: { lat: 34.2373, lng: -118.5266 }
+        center: { lat: 34.2374, lng: -118.5273 }
     },
     {
         name: "the Student Recreation Center",

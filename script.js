@@ -3,28 +3,28 @@
 var locations = [
     {
         name: "the Oviatt Library",
-        center: { lat: 34.2400, lng: -118.5294 }
+        center: { lat: 34.2400, lng: -118.5295 }
     },
     {
         name: "Sierra Hall",
-        center: { lat: 34.2384, lng: -118.5298 }
+        center: { lat: 34.2376, lng: -118.5298 }
     },
     {
         name: "the University Student Union",
-        center: { lat: 34.2393, lng: -118.5264 }
+        center: { lat: 34.2394, lng: -118.5258 }
     },
     {
         name: "the Bookstore",
-        center: { lat: 34.2378, lng: -118.5278 }
+        center: { lat: 34.2373, lng: -118.5266 }
     },
     {
         name: "the Student Recreation Center",
-        center: { lat: 34.2397, lng: -118.5252 }
+        center: { lat: 34.2398, lng: -118.5247 }
     }
 ];
 
 // how big the bounding box is around each location
-var boxSize = 0.0008;
+var boxSize = 0.0009;
 
 // quiz state
 var map;
@@ -39,7 +39,7 @@ function initMap() {
 
     // create the map centered on CSUN with all interactions disabled
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 34.2400, lng: -118.5280 },
+        center: { lat: 34.2390, lng: -118.5275 },
         zoom: 17,
         disableDefaultUI: true,
         gestureHandling: "none",

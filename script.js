@@ -32,7 +32,7 @@ var currentIndex = 0;
 var correctCount = 0;
 var timer = 0;
 var timerInterval;
-var animatedLine;
+var circleLine;
 
 // runs when the API loads
 function initMap() {
@@ -102,7 +102,7 @@ function handleDoubleClick(event) {
         drawRectangle(loc, "#00aa00");
         $("#prompts").append('<div class="correct">Your answer is correct!!</div>');
         correctCount++;
-        runAnimation(loc);
+        drawCircle(loc);
     } else {
         drawRectangle(loc, "#cc0000");
         $("#prompts").append('<div class="wrong">Sorry wrong location.</div>');
@@ -125,24 +125,35 @@ function drawRectangle(loc, color) {
     });
 }
 
-// draws a polyline across the correct location
+// draws a small circle outline at the correct location
+// the circle is made of points connected by a polyline
 // this uses google.maps.Polyline
-function runAnimation(loc) {
+function drawCircle(loc) {
 
-    if (animatedLine) {
-        animatedLine.setMap(null);
+    // remove the old circle if there is one
+    if (circleLine) {
+        circleLine.setMap(null);
     }
 
     var c = loc.center;
+    var radius = 0.0003;
+    var points = [];
 
-    animatedLine = new google.maps.Polyline({
-        path: [
-            { lat: c.lat - 0.0006, lng: c.lng - 0.0006 },
-            { lat: c.lat + 0.0006, lng: c.lng + 0.0006 }
-        ],
+    // build 36 points around the center to form a circle
+    for (var i = 0; i <= 36; i++) {
+        var angle = (i / 36) * 2 * Math.PI;
+        points.push({
+            lat: c.lat + radius * Math.cos(angle),
+            lng: c.lng + radius * Math.sin(angle)
+        });
+    }
+
+    circleLine = new google.maps.Polyline({
+        path: points,
         map: map,
         strokeColor: "#0000ff",
-        strokeWeight: 4
+        strokeWeight: 3,
+        strokeOpacity: 0.9
     });
 }
 
